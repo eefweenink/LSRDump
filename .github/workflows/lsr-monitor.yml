@@ -6,6 +6,9 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch: # Allow manual triggering
 
+permissions:
+  contents: write  # This allows the workflow to push changes
+
 jobs:
   monitor-and-download:
     runs-on: ubuntu-latest
