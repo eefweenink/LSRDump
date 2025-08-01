@@ -1,0 +1,47 @@
+name: LSR Download Monitor
+
+on:
+  schedule:
+    # Run daily at 6 AM UTC (adjust timezone as needed)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  monitor-and-download:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests beautifulsoup4 lxml
+    
+    - name: Create downloads directory
+      run: mkdir -p downloads
+    
+    - name: Download and check for changes
+      run: python scripts/lsr_monitor.py
+    
+    - name: Configure Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+    
+    - name: Commit and push changes
+      run: |
+        git add downloads/
+        if git diff --staged --quiet; then
+          echo "No changes detected"
+        else
+          git commit -m "Update LSR files - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        fi
