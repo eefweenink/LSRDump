@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allow manual triggering
 
 permissions:
-  contents: write  # This allows the workflow to push changes
+  contents: write
 
 jobs:
   monitor-and-download:
@@ -26,25 +26,38 @@ jobs:
     
     - name: Install dependencies
       run: |
+        python -m pip install --upgrade pip
         pip install requests beautifulsoup4 lxml
     
     - name: Create downloads directory
       run: mkdir -p downloads
     
     - name: Download and check for changes
-      run: python scripts/lsr_monitor.py
+      run: |
+        echo "Starting LSR monitor script..."
+        python scripts/lsr_monitor.py
+        echo "LSR monitor script completed"
+    
+    - name: Check if files changed
+      id: changes
+      run: |
+        if [ -n "$(git status --porcelain downloads/)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "Changes detected in downloads/"
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "No changes detected in downloads/"
+        fi
     
     - name: Configure Git
+      if: steps.changes.outputs.changes == 'true'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
     
     - name: Commit and push changes
+      if: steps.changes.outputs.changes == 'true'
       run: |
         git add downloads/
-        if git diff --staged --quiet; then
-          echo "No changes detected"
-        else
-          git commit -m "Update LSR files - $(date '+%Y-%m-%d %H:%M:%S UTC')"
-          git push
-        fi
+        git commit -m "Update LSR files - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        git push
