@@ -1,0 +1,30 @@
+{
+  "lsr-0.7-src.tar.gz": {
+    "last_modified": "lsr-0.7-src.tar.gz",
+    "size": "2023-11-11 08:55",
+    "url": "https://lsr.di.unimi.it/download/lsr-0.7-src.tar.gz",
+    "downloaded_at": "2025-08-04T22:40:14.601498",
+    "hash": "f524eeb65bd315b0af9babb149c91c63"
+  },
+  "lsr-2025-08-04.mysqldump.gz": {
+    "last_modified": "lsr-2025-08-04.mysql..>",
+    "size": "2025-08-04 03:20",
+    "url": "https://lsr.di.unimi.it/download/lsr-2025-08-04.mysqldump.gz",
+    "downloaded_at": "2025-08-04T22:40:15.634731",
+    "hash": "b79564021459e3b23c5c155a4e0329a7"
+  },
+  "lsr-snippets-all-2025-08-04.tar.gz": {
+    "last_modified": "lsr-snippets-all-202..>",
+    "size": "2025-08-04 03:20",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-all-2025-08-04.tar.gz",
+    "downloaded_at": "2025-08-04T22:40:16.240014",
+    "hash": "4eea9030dbe33fb53f8856c8705acb8b"
+  },
+  "lsr-snippets-docs-2025-08-04.tar.gz": {
+    "last_modified": "lsr-snippets-docs-20..>",
+    "size": "2025-08-04 03:20",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-docs-2025-08-04.tar.gz",
+    "downloaded_at": "2025-08-04T22:40:16.602981",
+    "hash": "78de782dcc760bd61b94773c6d35737f"
+  }
+}
