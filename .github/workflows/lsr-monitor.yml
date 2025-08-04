@@ -11,6 +11,9 @@ on:
       - 'lsr_monitor.py'
       - '.github/workflows/lsr-monitor.yml'
 
+permissions:
+  contents: write
+
 jobs:
   monitor-and-download:
     runs-on: ubuntu-latest

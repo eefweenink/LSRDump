@@ -3,28 +3,28 @@
     "last_modified": "lsr-0.7-src.tar.gz",
     "size": "2023-11-11 08:55",
     "url": "https://lsr.di.unimi.it/download/lsr-0.7-src.tar.gz",
-    "downloaded_at": "2025-08-01T23:16:46.892731",
+    "downloaded_at": "2025-08-01T21:29:16.183151",
     "hash": "f524eeb65bd315b0af9babb149c91c63"
   },
-  "lsr-2025-08-01.mysqldump.gz": {
-    "last_modified": "lsr-2025-08-01.mysql..>",
-    "size": "2025-08-01 03:15",
-    "url": "https://lsr.di.unimi.it/download/lsr-2025-08-01.mysqldump.gz",
-    "downloaded_at": "2025-08-01T23:16:48.231263",
-    "hash": "058f483e73ebe92e9f6abe068e0f4ffc"
+  "lsr-2025-08-03.mysqldump.gz": {
+    "last_modified": "lsr-2025-08-03.mysql..>",
+    "size": "2025-08-03 03:14",
+    "url": "https://lsr.di.unimi.it/download/lsr-2025-08-03.mysqldump.gz",
+    "downloaded_at": "2025-08-03T06:05:48.945400",
+    "hash": "ca449f3072643616a192a8606ffa69f4"
   },
-  "lsr-snippets-all-2025-08-01.tar.gz": {
+  "lsr-snippets-all-2025-08-03.tar.gz": {
     "last_modified": "lsr-snippets-all-202..>",
-    "size": "2025-08-01 03:15",
-    "url": "https://lsr.di.unimi.it/download/lsr-snippets-all-2025-08-01.tar.gz",
-    "downloaded_at": "2025-08-01T23:16:48.774445",
-    "hash": "26349069d541c37066b8d2a216dfc793"
+    "size": "2025-08-03 03:14",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-all-2025-08-03.tar.gz",
+    "downloaded_at": "2025-08-03T06:05:50.187517",
+    "hash": "7496dbc1001e92011e7ffa52e0757311"
   },
-  "lsr-snippets-docs-2025-08-01.tar.gz": {
+  "lsr-snippets-docs-2025-08-03.tar.gz": {
     "last_modified": "lsr-snippets-docs-20..>",
-    "size": "2025-08-01 03:15",
-    "url": "https://lsr.di.unimi.it/download/lsr-snippets-docs-2025-08-01.tar.gz",
-    "downloaded_at": "2025-08-01T23:16:49.065580",
-    "hash": "ddc394711c8c35c338a219008303c554"
+    "size": "2025-08-03 03:14",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-docs-2025-08-03.tar.gz",
+    "downloaded_at": "2025-08-03T06:05:51.236466",
+    "hash": "c309e718de5194f46de318226cc48d11"
   }
 }
