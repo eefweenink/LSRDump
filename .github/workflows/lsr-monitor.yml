@@ -1,0 +1,73 @@
+name: LSR Download Monitor
+
+on:
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allow manual triggering
+  push:
+    branches: [ main ]
+    paths:
+      - 'lsr_monitor.py'
+      - '.github/workflows/lsr-monitor.yml'
+
+jobs:
+  monitor-and-download:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Create downloads directory
+      run: mkdir -p downloads
+    
+    - name: Run LSR monitor
+      env:
+        VERIFY_SSL: 'false'  # Disable SSL verification due to expired certificate
+      run: python lsr_monitor.py
+    
+    - name: Check for changes
+      id: changes
+      run: |
+        if [ -d "downloads" ] && [ "$(ls -A downloads)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "Files found in downloads directory:"
+          ls -la downloads/
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "No files in downloads directory"
+        fi
+    
+    - name: Commit and push changes
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add downloads/
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update LSR downloads - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        fi
+    
+    - name: Upload artifacts
+      if: steps.changes.outputs.changes == 'true'
+      uses: actions/upload-artifact@v3
+      with:
+        name: lsr-downloads
+        path: downloads/
+        retention-days: 30
