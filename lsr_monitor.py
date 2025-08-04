@@ -15,36 +15,40 @@ from urllib.parse import urljoin, urlparse
 import time
 import urllib3
 
+# Disable SSL warnings when verification is disabled
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 # Configuration
 BASE_URL = "https://lsr.di.unimi.it/download/"
 DOWNLOADS_DIR = "downloads"
 METADATA_FILE = os.path.join(DOWNLOADS_DIR, "metadata.json")
 
-# SSL Configuration - can be overridden via environment variable
-VERIFY_SSL = os.getenv('VERIFY_SSL', 'false').lower() == 'true'
-
-# Disable SSL warnings when verification is disabled
-if not VERIFY_SSL:
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 def get_page_content():
     """Fetch the download page content."""
-    try:
-        print(f"Fetching page content from {BASE_URL}")
-        if not VERIFY_SSL:
-            print("Warning: SSL certificate verification is disabled")
-        
-        response = requests.get(BASE_URL, timeout=30, verify=VERIFY_SSL)
-        response.raise_for_status()
-        return response.text
-    except requests.exceptions.SSLError as e:
-        print(f"SSL Error: {e}")
-        print("The website's SSL certificate appears to be invalid or expired.")
-        print("You can bypass this by setting VERIFY_SSL = False in the script.")
-        sys.exit(1)
-    except requests.RequestException as e:
-        print(f"Error fetching page: {e}")
-        sys.exit(1)
+    # Try with SSL verification first, then fallback to no verification
+    for verify_ssl in [True, False]:
+        try:
+            if not verify_ssl:
+                print("Warning: SSL certificate verification disabled due to server certificate issues")
+            response = requests.get(BASE_URL, timeout=30, verify=verify_ssl)
+            response.raise_for_status()
+            return response.text
+        except requests.exceptions.SSLError as e:
+            if verify_ssl:
+                print(f"SSL verification failed: {e}")
+                print("Retrying without SSL verification...")
+                continue
+            else:
+                print(f"Connection failed even without SSL verification: {e}")
+                sys.exit(1)
+        except requests.RequestException as e:
+            if verify_ssl:
+                print(f"Request failed with SSL verification: {e}")
+                print("Retrying without SSL verification...")
+                continue
+            else:
+                print(f"Error fetching page: {e}")
+                sys.exit(1)
 
 def parse_file_list(html_content):
     """Parse the HTML to extract file information."""
@@ -112,7 +116,21 @@ def download_file(url, filepath, retries=3):
     for attempt in range(retries):
         try:
             print(f"Downloading {url} (attempt {attempt + 1}/{retries})")
-            response = requests.get(url, stream=True, timeout=60, verify=VERIFY_SSL)
+            # Try with SSL verification first, then fallback
+            ssl_error_occurred = False
+            for verify_ssl in [True, False]:
+                try:
+                    if not verify_ssl and not ssl_error_occurred:
+                        print(f"Warning: Using insecure connection for {url}")
+                    response = requests.get(url, stream=True, timeout=60, verify=verify_ssl)
+                    response.raise_for_status()
+                    break
+                except requests.exceptions.SSLError:
+                    if verify_ssl:
+                        ssl_error_occurred = True
+                        continue
+                    else:
+                        raise
             response.raise_for_status()
             
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
@@ -124,13 +142,6 @@ def download_file(url, filepath, retries=3):
             print(f"Successfully downloaded: {filepath}")
             return True
             
-        except requests.exceptions.SSLError as e:
-            print(f"SSL Error during download attempt {attempt + 1}: {e}")
-            if attempt < retries - 1:
-                time.sleep(5)
-            else:
-                print(f"Failed to download {url} due to SSL errors after {retries} attempts")
-                return False
         except requests.RequestException as e:
             print(f"Download attempt {attempt + 1} failed: {e}")
             if attempt < retries - 1:
@@ -144,7 +155,6 @@ def download_file(url, filepath, retries=3):
 def main():
     """Main monitoring and download logic."""
     print(f"Starting LSR monitor at {datetime.now().isoformat()}")
-    print(f"SSL Verification: {'Enabled' if VERIFY_SSL else 'Disabled'}")
     
     # Fetch current page content
     html_content = get_page_content()
