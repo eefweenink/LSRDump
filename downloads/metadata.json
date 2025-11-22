@@ -6,25 +6,25 @@
     "downloaded_at": "2025-08-01T21:29:16.183151",
     "hash": "f524eeb65bd315b0af9babb149c91c63"
   },
-  "lsr-2025-11-21.mysqldump.gz": {
-    "last_modified": "lsr-2025-11-21.mysql..>",
-    "size": "2025-11-21 03:17",
-    "url": "https://lsr.di.unimi.it/download/lsr-2025-11-21.mysqldump.gz",
-    "downloaded_at": "2025-11-21T06:09:42.534683",
-    "hash": "ea5070a34ad69ca214cf02bb67e86aa9"
+  "lsr-2025-11-22.mysqldump.gz": {
+    "last_modified": "lsr-2025-11-22.mysql..>",
+    "size": "2025-11-22 03:35",
+    "url": "https://lsr.di.unimi.it/download/lsr-2025-11-22.mysqldump.gz",
+    "downloaded_at": "2025-11-22T06:08:23.910666",
+    "hash": "64fbc055e7375ccd3c5376b6ba58d312"
   },
-  "lsr-snippets-all-2025-11-21.tar.gz": {
+  "lsr-snippets-all-2025-11-22.tar.gz": {
     "last_modified": "lsr-snippets-all-202..>",
-    "size": "2025-11-21 03:17",
-    "url": "https://lsr.di.unimi.it/download/lsr-snippets-all-2025-11-21.tar.gz",
-    "downloaded_at": "2025-11-21T06:09:44.006383",
-    "hash": "f0b85c55433c9180fb732fb3536f0b9c"
+    "size": "2025-11-22 03:35",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-all-2025-11-22.tar.gz",
+    "downloaded_at": "2025-11-22T06:08:26.060638",
+    "hash": "938544fcee6aea56ec2101515afed846"
   },
-  "lsr-snippets-docs-2025-11-21.tar.gz": {
+  "lsr-snippets-docs-2025-11-22.tar.gz": {
     "last_modified": "lsr-snippets-docs-20..>",
-    "size": "2025-11-21 03:17",
-    "url": "https://lsr.di.unimi.it/download/lsr-snippets-docs-2025-11-21.tar.gz",
-    "downloaded_at": "2025-11-21T06:09:45.035385",
-    "hash": "769f0a22e902634fb19066d42f6c1ede"
+    "size": "2025-11-22 03:35",
+    "url": "https://lsr.di.unimi.it/download/lsr-snippets-docs-2025-11-22.tar.gz",
+    "downloaded_at": "2025-11-22T06:08:27.142833",
+    "hash": "c7dd153edbe363429d3fb6766ebf1fca"
   }
 }
